@@ -1,7 +1,7 @@
 import pygame
 
 class Road:
-    def __init__(self, start_pos, end_pos, width=100, color=(100, 100, 100)):
+    def __init__(self, start_pos, end_pos, width=47, color=(100, 100, 100)):
         self.start_pos = start_pos
         self.end_pos = end_pos
         self.width = width

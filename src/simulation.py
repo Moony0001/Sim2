@@ -31,3 +31,39 @@ class Simulation:
             vehicle.draw(self.screen)
         for obstacle in self.obstacles:
             obstacle.draw(self.screen)
+    
+    def get_state(self):
+        # Return a dict of all relevant simulation state
+        return {
+            "vehicles": [
+                {
+                    "position": v.position[:],
+                    "velocity": v.velocity[:],
+                    "acceleration": v.acceleration[:],
+                    "angle": v.angle,
+                    "smoothed_force": v.smoothed_force[:],
+                }
+                for v in self.vehicles
+            ],
+            "obstacles": [
+                {
+                    "pos": o.pos[:],
+                    "radius": o.radius
+                }
+                for o in self.obstacles
+            ],
+            # Add more if you have other stateful objects
+        }
+
+    def set_state(self, state):
+        # Restore simulation state from a dict
+        for v, v_state in zip(self.vehicles, state["vehicles"]):
+            v.position = v_state["position"][:]
+            v.velocity = v_state["velocity"][:]
+            v.acceleration = v_state["acceleration"][:]
+            v.angle = v_state["angle"]
+            v.smoothed_force = v_state["smoothed_force"][:]
+        for o, o_state in zip(self.obstacles, state["obstacles"]):
+            o.pos = o_state["pos"][:]
+            o.radius = o_state["radius"]
+        # Add more if you have other stateful objects
